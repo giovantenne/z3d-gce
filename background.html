@@ -1,0 +1,104 @@
+<html>
+	<head>  
+<script type="text/javascript">
+    //React when a browser action's icon is clicked.
+	/*chrome.tabs.sendRequest(tab.id, {hidebackground: localStorage["hidebackground"]});
+	chrome.tabs.sendRequest(tab.id, {zoomonlink: localStorage["zoomonlink"]});
+	chrome.tabs.sendRequest(tab.id, {bounce: localStorage["bounce"]});
+	chrome.tabs.sendRequest(tab.id, {increasetextsize: localStorage["increasetextsize"]});
+	chrome.tabs.sendRequest(tab.id, {speed: localStorage["speed"]});
+	chrome.tabs.sendRequest(tab.id, {maxheight: localStorage["maxheight"]});
+	chrome.tabs.sendRequest(tab.id, {animations: localStorage["animations"]});
+	chrome.tabs.sendRequest(tab.id, {glassescolour: localStorage["glassescolour"]});
+*/
+var zAttivo=false;
+var activeTab="0";
+function initialize(){
+	
+	if(!localStorage["prefSet"]){
+		localStorage["prefSet"]="true";
+		localStorage["hidebackground"]="false";
+		localStorage["zoomonlink"]="true";
+		localStorage["bounce"]="true";
+		localStorage["increasetextsize"]="true";
+		localStorage["speed"]="100";
+		localStorage["maxheight"]="20";
+		localStorage["animations"]="7";
+		localStorage["glassescolour"]="0";
+		setIconOff();	
+	
+	}
+		
+
+	chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
+		if(changeInfo.status=="complete")
+			deactivateTab(tabId);
+	});	
+	chrome.tabs.onSelectionChanged.addListener(function(id, info) {
+		setIconTab(id);	
+	});
+  	chrome.browserAction.onClicked.addListener(function(tab) {
+		if(!zAttivo){
+			chrome.tabs.getSelected(null, function(tab) {
+				chrome.tabs.sendRequest(tab.id, {zStart: "true",hidebackground: localStorage["hidebackground"],zoomonlink: localStorage["zoomonlink"],bounce: localStorage["bounce"],increasetextsize: localStorage["increasetextsize"],speed: localStorage["speed"],maxheight: localStorage["maxheight"],animations: localStorage["animations"],glassescolour: localStorage["glassescolour"]});
+			});
+			activateTab(tab.id);			
+	
+		}else{
+			chrome.tabs.sendRequest(tab.id, {zStart: "false"});			
+			deactivateTab(tab.id);
+			
+		}
+		zAttivo=!zAttivo;
+		
+			/*chrome.tabs.sendRequest(tab.id, {hidebackground: localStorage["hidebackground"]});
+			chrome.tabs.sendRequest(tab.id, {zoomonlink: localStorage["zoomonlink"]});
+			chrome.tabs.sendRequest(tab.id, {bounce: localStorage["bounce"]});
+			chrome.tabs.sendRequest(tab.id, {increasetextsize: localStorage["increasetextsize"]});
+			chrome.tabs.sendRequest(tab.id, {speed: localStorage["speed"]});
+			chrome.tabs.sendRequest(tab.id, {maxheight: localStorage["maxheight"]});
+			chrome.tabs.sendRequest(tab.id, {animations: localStorage["animations"]});
+			chrome.tabs.sendRequest(tab.id, {glassescolour: localStorage["glassescolour"]});*/
+		
+	});
+}
+
+function activateTab(id){
+	activeTab+=","+id;
+	setIconOn();
+}
+
+
+function deactivateTab(id){
+	activeTab=activeTab.replace(","+id,"");
+	setIconOff();
+}
+
+function setIconTab(id){
+	if(activeTab.indexOf(id)>0)
+		setIconOn();
+	else
+		setIconOff();
+}
+function setTab(id){
+	if(activeTab.indexOf(id)>0)
+		activateTab(id)		
+	else
+		deactivateTab(id);
+}
+
+function setIconOn(){
+	chrome.browserAction.setBadgeText({text:"On"});  
+	chrome.browserAction.setBadgeBackgroundColor({color:[255, 0, 0, 255]});
+}
+
+function setIconOff(){
+	chrome.browserAction.setBadgeText({text:"Off"});  
+	chrome.browserAction.setBadgeBackgroundColor({color:[0, 255,255, 255]});
+}
+
+  </script>
+</head>
+ <body onload="initialize()">
+</body>
+</html>

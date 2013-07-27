@@ -1,0 +1,117 @@
+<html>
+<head><title>Z3D Extension Options</title>
+<script type="text/javascript">
+
+// Saves options to localStorage.
+function save_options() {
+  
+	localStorage["zoomonlink"]=document.getElementById("zoomonlink").checked;
+	localStorage["bounce"]=document.getElementById("bounce").checked;
+	localStorage["increasetextsize"]=document.getElementById("increasetextsize").checked;
+	localStorage["hidebackground"]=document.getElementById("hidebackground").checked;
+	localStorage["maxheight"]=document.getElementById("maxheight").value;
+	localStorage["speed"]=document.getElementById("speed").value;
+	localStorage["animations"]=document.getElementById("animations").value;
+	localStorage["glassescolour"]=document.getElementById("glassescolour").value;
+ 
+
+  // Update status to let user know options were saved.
+  var status = document.getElementById("status");
+  status.innerHTML = "Options Saved.";
+  setTimeout(function() {
+    status.innerHTML = "&nbsp;";
+  }, 750);
+restore_options();
+}
+
+// Restores select box state to saved value from localStorage.
+function restore_options() {
+	if(localStorage["hidebackground"]=="true")
+		document.getElementById("hidebackground").checked=true;
+	if(localStorage["zoomonlink"]=="true")
+		document.getElementById("zoomonlink").checked=true;
+	if(localStorage["bounce"]=="true")
+		document.getElementById("bounce").checked=true;
+	if(localStorage["increasetextsize"]=="true")
+		document.getElementById("increasetextsize").checked=true;
+	if(localStorage["speed"]==150)
+		document.getElementById("speed")[0].selected=true;
+	else if(localStorage["speed"]==100)
+		document.getElementById("speed")[1].selected=true;
+	else if(localStorage["speed"]==50)
+		document.getElementById("speed")[2].selected=true;
+
+	if(localStorage["maxheight"]==10)
+		document.getElementById("maxheight")[0].selected=true;
+	else if(localStorage["maxheight"]==20)
+		document.getElementById("maxheight")[1].selected=true;
+	else if(localStorage["maxheight"]==70)
+		document.getElementById("maxheight")[2].selected=true;
+	
+	if(localStorage["animations"]==12)
+		document.getElementById("animations")[0].selected=true;
+	else if(localStorage["animations"]==7)
+		document.getElementById("animations")[1].selected=true;
+	else if(localStorage["animations"]==3)
+		document.getElementById("animations")[2].selected=true;	
+
+	if(localStorage["glassescolour"]==1)
+		document.getElementById("glassescolour")[0].selected=true;
+	else if(localStorage["glassescolour"]==2)
+		document.getElementById("glassescolour")[1].selected=true;
+	else if(localStorage["glassescolour"]==3)
+		document.getElementById("glassescolour")[2].selected=true;	
+	else if(localStorage["glassescolour"]==4)
+		document.getElementById("glassescolour")[3].selected=true;	
+
+}
+
+</script>
+<style>
+	body{
+		font-family: Arial, Verdana, sans-serif;
+	}
+</style>
+</head>
+<body onload="restore_options()">
+<div align="center">
+<a href="http://z3d.z3n.it" target="_blank"><img src="images/z3d-128.png" style="border:0px;margin-bottom:20px;"/></a>
+<br /><a href="http://z3d.z3n.it/need-glasses" target="_blank" style="color:#FF0000"><b>Need 3D glasses?</b></a><br /><br />
+<table style="border:1px #000 solid" padding="5px">
+<tr><td colspan="2" style="background-color:#00FFFF"><div align="center" style="color:#000"><b>Z3D</b> Extension Options</div></td></tr>
+<tr><td>Zoom on link</td><td><input type='checkbox' id='zoomonlink'></td></tr>
+<tr><td>Bounce</td><td><input type='checkbox' id='bounce' > </td></tr>
+<tr><td>Increase text size </td><td> <input type='checkbox' id='increasetextsize'></td></tr>
+<tr><td>Hide background </td><td><input type='checkbox' id='hidebackground' > </td></tr>
+<tr><td>Deep </td><td><select id='maxheight'>	
+	<option value='10' selected>Little deep</option>	
+	<option value='20'>Normal</option>	
+	<option value='70'>Very deep</option>
+</select> </td></tr>
+<tr><td>Speed of animations </td><td><select id='speed'>	
+	<option value='150'>Slow</option>	
+	<option value='100' selected>Normal</option>	
+	<option value='50'>Fast</option>
+</select> </td></tr>
+<tr><td>Animations </td><td><select id='animations' >	
+	<option value='12'>Few</option>	
+	<option value='7' selected>Normal</option>	
+	<option value='3'>Many</option>
+</select> </td></tr>
+<tr><td>Glasses Colour </td><td><select id='glassescolour'>	
+	<option value='1' selected>Red - Cyan</option>	
+	<option value='2'>Red - Blue</option>	Amber - Blue
+	<option value='3'>Red - Green</option>
+	<option value='4'>Amber - Blue</option>
+</select> </td></tr>
+<tr><td colspan="2"><div align="center"><button onclick="save_options()">Save</button></div></td></tr>
+<tr><td colspan="2"><div align="center" id="status">&nbsp;</div></td></tr>
+
+</table>
+
+<br>
+<div align="center" style="font-size:10px;">Developed by <a href="http://www.claudiobenvenuti.it" target="_blank">Claudio Benvenuti</a></div>
+
+</div>
+</body>
+</html>

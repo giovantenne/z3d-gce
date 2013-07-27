@@ -1,0 +1,21 @@
+{
+  "name": "z3d-gce",
+  "version": "0.25",
+  "description": "Z3D: Enjoy surfing three-dimensional, stereoscopic and anaglyph web.",
+  "options_page": "options.html",
+  "icons": { "128": "images/z3d-128.png" },
+  "background_page": "background.html",
+  "browser_action": {
+  	"default_icon": "images/z3d-32.png",
+  	"default_title": "Z3D: the anaglyph web"   
+  },
+  "content_scripts": [
+  	{
+		"matches": ["https://*/*", "http://*/*"],
+    		"js": ["source.js"]
+  	}
+  ],
+  "permissions": [
+  "tabs"
+  ]
+}
